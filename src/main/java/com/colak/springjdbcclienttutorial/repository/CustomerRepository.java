@@ -37,22 +37,25 @@ public class CustomerRepository {
                 .optional();
     }
 
-    public void insert(Customer customer) {
+    public int insert(Customer customer) {
         int inserted = jdbcClient.sql("insert into customer (id, name, lastname, birthday) values (?,?,?,?)")
                 .params(List.of(customer.id(), customer.name(), customer.lastname(), customer.birthday()))
                 .update();
         Assert.state(inserted == 1, "An exception error occurred while inserting customer");
+        return inserted;
     }
 
-    public void update(int id, Customer customer) {
+    public int update(int id, Customer customer) {
         int updated = jdbcClient.sql("update customer set name = ?, lastname = ?, birthday = ? where id = ?")
                 .params(List.of(customer.name(), customer.lastname(), customer.birthday(), id))
                 .update();
         Assert.state(updated == 1, "An exception error occurred while updating customer");
+        return updated;
     }
 
-    public void delete(int id) {
+    public int delete(int id) {
         int deleted = jdbcClient.sql("delete from customer where id = :id").param("id", id).update();
         Assert.state(deleted == 1, "An exception error occurred while updating customer");
+        return deleted;
     }
 }

@@ -38,4 +38,12 @@ class CustomerRepositoryTest {
         assertEquals(expected, firstCustomer.birthday());
     }
 
+    @Test
+    void insert() {
+        LocalDate birthday = LocalDate.of(1990, 5, 15);
+        Customer newCustomer = new Customer(2, "Jane", "Smith", birthday);
+        int inserted = customerRepository.insert(newCustomer);
+        assertEquals(1, inserted);
+    }
+
 }
