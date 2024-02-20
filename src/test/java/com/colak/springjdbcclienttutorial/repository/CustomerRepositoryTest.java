@@ -7,8 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class CustomerRepositoryTest {
@@ -22,6 +24,16 @@ class CustomerRepositoryTest {
         assertEquals(1, customerList.size());
 
         Customer firstCustomer = customerList.getFirst();
+        LocalDate expected = LocalDate.of(1990, 5, 15);
+        assertEquals(expected, firstCustomer.birthday());
+    }
+
+    @Test
+    void getCustomerById2() {
+        Optional<Customer> optional = customerRepository.getCustomerById2(1);
+        assertTrue(optional.isPresent());
+
+        Customer firstCustomer = optional.get();
         LocalDate expected = LocalDate.of(1990, 5, 15);
         assertEquals(expected, firstCustomer.birthday());
     }
